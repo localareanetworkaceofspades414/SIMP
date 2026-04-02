@@ -314,6 +314,15 @@ Every agent interaction is recorded with:
 - Active community and support
 - Easy integration with existing systems
 
+### 🧠 Advanced Decision Engine (Optional)
+SIMP includes an optional **StrategicOptimizer** module for domains requiring sophisticated multi-criteria decision analysis:
+- Minimax game-theory optimization
+- Fractal decision tree analysis
+- Multi-level strategic reasoning
+- Confidence scoring and risk assessment
+
+This is useful for trading systems, resource allocation, scheduling, and other optimization domains.
+
 ---
 
 ## Project Status

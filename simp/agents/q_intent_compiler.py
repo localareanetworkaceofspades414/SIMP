@@ -1,19 +1,18 @@
 """
-Q_IntentCompiler: Quantum Intent Compiler
+StrategicOptimizer: Decision Engine with Minimax Game Theory
 
-Ports JavaScript Q_IntentCompiler to Python for the GROK node.
-Implements fractal decision trees with minimax optimization for autonomous
-trading strategy generation.
+Implements fractal decision trees with minimax optimization for strategic
+intent compilation and multi-criteria analysis.
 
 Core Algorithm:
-1. Fetch foresight streams from VISION and patterns from GEMINI
-2. Build fractal decision tree (branches = market traits)
+1. Validate and normalize input data streams
+2. Build fractal decision tree (branches = analysis traits)
 3. Apply minimax game theory optimization
 4. Recursively improve decision quality
-5. Return optimized strategic intent
+5. Return optimized strategic intent with reasoning trace
 
 Key Innovation: Uses minimax (like chess engines) to find optimal strategies
-considering market as adversary.
+by modeling decision-making as adversarial game theory.
 """
 
 import asyncio
@@ -75,12 +74,13 @@ class DecisionTree:
         }
 
 
-class QIntentCompiler:
+class StrategicOptimizer:
     """
-    Quantum Intent Compiler: Strategic reasoning engine using minimax optimization
+    Strategic Optimizer: Decision engine using minimax game theory
 
-    The Q_IntentCompiler is GROK's core. It takes market data and generates
-    optimal trading strategies using game theory and fractal analysis.
+    Compiles complex decision scenarios into optimized strategic intents using
+    fractal decision trees and minimax optimization. Works with any domain:
+    trading, scheduling, resource allocation, multi-agent coordination, etc.
     """
 
     def __init__(self):
@@ -96,14 +96,14 @@ class QIntentCompiler:
         market_data: Optional[Dict[str, Any]] = None
     ) -> DecisionTree:
         """
-        Main entry point: Compile market data into optimal strategic intent
+        Main entry point: Compile input streams into optimal strategic intent
 
         Args:
-            foresight_streams: Data from VISION (signals, confidence, etc.)
-            market_data: Additional market context (optional)
+            foresight_streams: Data streams with signals, confidence, deltas, etc.
+            market_data: Additional context for decision making (optional)
 
         Returns:
-            DecisionTree: Complete optimized strategy with reasoning
+            DecisionTree: Complete optimized strategy with reasoning trace
         """
         try:
             # Step 1: Fetch and validate streams
@@ -119,7 +119,7 @@ class QIntentCompiler:
             tree = await self._recursive_improve(tree)
 
             # Step 5: Add reasoning trace
-            tree.reasoning_trace.append("Q_IntentCompiler completed successfully")
+            tree.reasoning_trace.append("StrategicOptimizer compilation completed")
 
             return tree
 
@@ -133,13 +133,13 @@ class QIntentCompiler:
                 utility=0.0,
                 optimal_action="HOLD",  # Safe default
                 confidence=0.0,
-                reasoning_trace=[f"Error in Q_IntentCompiler: {str(e)}"]
+                reasoning_trace=[f"Error in StrategicOptimizer: {str(e)}"]
             )
 
     def _validate_streams(self, streams: Dict[str, Any]) -> Dict[str, Any]:
         """Validate and normalize input streams"""
         if not streams:
-            raise ValueError("Empty streams provided to Q_IntentCompiler")
+            raise ValueError("Empty streams provided to StrategicOptimizer")
 
         # Ensure required fields
         required_fields = ["timestamp", "deltas"]
@@ -158,10 +158,10 @@ class QIntentCompiler:
 
     def _build_fractal_tree(self, streams: Dict[str, Any]) -> DecisionTree:
         """
-        Build initial fractal decision tree from market deltas
+        Build initial fractal decision tree from input data
 
-        Fractal structure: each branch represents a market trait (momentum, volume, etc.)
-        with values representing current state of that trait.
+        Fractal structure: each branch represents a decision trait (momentum, volume, etc.)
+        with values representing current state of that trait for analysis.
         """
         deltas = streams.get("deltas", {})
         foresight = streams.get("foresight", {})
@@ -212,11 +212,11 @@ class QIntentCompiler:
         """
         Apply minimax optimization using game theory
 
-        Minimax models market as two-player game:
-        - MAX (KLOUTBOT): Tries to maximize profit
-        - MIN (Market): Tries to minimize our profit
+        Minimax models decision space as two-player game:
+        - MAX (Optimizer): Tries to maximize utility
+        - MIN (Adversary): Tries to minimize our utility
 
-        Result: Conservative but optimal decisions considering worst case
+        Result: Conservative but optimal decisions considering worst-case scenarios
         """
         MAX = 1
         MIN = -1
@@ -423,9 +423,9 @@ class QIntentCompiler:
 
     def get_action_params(self, tree: DecisionTree) -> Dict[str, Any]:
         """
-        Convert decision tree into actionable trading parameters
+        Convert decision tree into actionable execution parameters
 
-        Output format suitable for KashClaw trading organs
+        Returns structured output for downstream agents or executors
         """
         if not tree.branches:
             return {
@@ -434,34 +434,33 @@ class QIntentCompiler:
                 "reason": "No valid decision tree"
             }
 
-        # Calculate position sizing based on confidence
-        base_quantity = 50  # Base trade size
-        quantity = base_quantity * tree.confidence
+        # Calculate confidence-based weighting
+        base_weight = 1.0
+        execution_weight = base_weight * tree.confidence
 
-        # Determine asset based on dominant trait
+        # Determine primary factor based on dominant trait
         dominant_trait = max(tree.branches, key=lambda b: b.value).trait
-        asset_mapping = {
-            "momentum": "SOL/USDC",
-            "volume": "ETH/USDC",
-            "sentiment": "BTC/USDC",
-            "volatility": "AAPL/USD"
-        }
-        asset_pair = asset_mapping.get(dominant_trait, "SOL/USDC")
 
         return {
-            "organ_id": "spot:001",
-            "asset_pair": asset_pair,
-            "side": tree.optimal_action,
-            "quantity": quantity,
-            "price": 150.0,  # Market price (updated by VISION)
+            "action": tree.optimal_action,
             "confidence": tree.confidence,
+            "execution_weight": execution_weight,
+            "primary_factor": dominant_trait,
             "reasoning": "; ".join(tree.reasoning_trace[-2:]),
             "tree_depth": tree.depth,
-            "score": tree.score
+            "optimization_score": tree.score,
+            "timestamp": tree.root_timestamp,
+            "utility": tree.utility
         }
 
 
 # For backward compatibility
-def create_compiler() -> QIntentCompiler:
-    """Factory function to create Q_IntentCompiler instance"""
-    return QIntentCompiler()
+QIntentCompiler = StrategicOptimizer  # Alias for existing code
+
+def create_compiler() -> StrategicOptimizer:
+    """Factory function to create StrategicOptimizer instance"""
+    return StrategicOptimizer()
+
+def create_strategic_optimizer() -> StrategicOptimizer:
+    """Factory function to create StrategicOptimizer instance (preferred name)"""
+    return StrategicOptimizer()
